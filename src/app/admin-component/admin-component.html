@@ -1,0 +1,95 @@
+<h2>🧾 Admin – Orders</h2>
+
+
+
+
+
+
+<div *ngIf="order$ | async as orders">
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Email</th>
+<th (click)="sortByPickupTime()" style="cursor: pointer">
+  Pickup Time
+  <span *ngIf="sortDirection === 'asc'">⬆️</span>
+  <span *ngIf="sortDirection === 'desc'">⬇️</span>
+</th>        <th>Status</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let order of sortedOrders(orders)">
+
+        <!-- Summary row -->
+        <tr>
+          <td>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              (click)="toggle(order.orderId)"
+            >
+              {{ isExpanded(order.orderId) ? '−' : '+' }}
+            </button>
+          </td>
+
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.email }}</td>
+          <td>{{ order.pickupTime | date:'short' }}</td>
+
+          <td>
+            <span class="badge bg-warning" *ngIf="order.status === 'CREATED'">
+              CREATED
+            </span>
+            <span class="badge bg-warning" *ngIf="order.status === 'PREPARING'">
+              PREPARING
+            </span>
+             <span class="badge bg-success" *ngIf="order.status === 'CLOSED'">
+              CLOSED
+            </span>
+            <button
+  class="btn btn-sm btn-success"
+  *ngIf="order.status === 'PREPARING'"
+  (click)="closeOrder(order.orderId)"
+>
+  Mark as picked up
+</button>
+
+          </td>
+
+          <td>{{ order.totalPrice | currency:'EUR' }}</td>
+        </tr>
+
+        <!-- Expanded row -->
+        <tr *ngIf="isExpanded(order.orderId)">
+          <td colspan="6">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr>
+                  <th>Pizza</th>
+                  <th>Size</th>
+                  <th>Quantity</th>
+                  <th>Row Price</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let item of order.orderItems">
+                  <td>{{ item.pizzaName }}</td>
+                  <td>{{ item.size }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>
+                    {{ item.price * item.quantity | currency:'EUR' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+      </ng-container>
+    </tbody>
+  </table>
+</div>

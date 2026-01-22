@@ -1,0 +1,67 @@
+<h2>My Orders</h2>
+<div *ngIf="order$ | async as orders; else loading">
+  <table class="table table-hover align-middle">
+    <thead>
+      <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let order of orders">
+
+        <tr>
+          <td>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              (click)="toggle(order.orderId)">
+              {{ isExpanded(order.orderId) ? '−' : '+' }}
+            </button>
+          </td>
+
+          <td>{{ order.orderId }}</td>
+          <td>
+            <span class="badge bg-info">
+              {{ order.status }}
+            </span>
+          </td>
+          <td>{{ order.totalPrice | currency:'EUR' }}</td>
+          <td>{{ order.createdAt | date:'short' }}</td>
+        </tr>
+
+        <tr *ngIf="isExpanded(order.orderId)">
+          <td colspan="5" class="bg-light">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr>
+                  <th>Pizza</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let item of order.items">
+                  <td>{{ item.pizzaName }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>
+                    {{ item.price * item.quantity | currency:'EUR' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #loading>
+  Loading orders...
+</ng-template>
