@@ -8,10 +8,12 @@ import { Login } from './login/login';
 import { Myorders } from './myorders/myorders';
 import { adminGuardGuard } from './admin-guard-guard';
 import { customerGuard } from './customer-guard';
+import { Contact } from './contact/contact';
 
 
 
 export const routes: Routes = [
+  { path: 'contact', component: Contact },
 
   {path:'my-orders',component:Myorders,canActivate:[customerGuard]},
   { path: 'login', component: Login },

@@ -88,7 +88,7 @@ isSubmitting = false;
      this.cartService.placeOrder(this.pickupTime, this.email).subscribe({
   next: response => {
     this.errorMessages = [];
-    alert(`Order placed! Order ID: ${response.orderId}. Pickup at ${new Date(response.pickupTime!).toLocaleString()}`);
+    //alert(`Order placed! Order ID: ${response.orderId}. Pickup at ${new Date(response.pickupTime!).toLocaleString()}`);
     this.cartService.clear();
     this.router.navigate(['/order-confirmation', response.orderId]);
   },
