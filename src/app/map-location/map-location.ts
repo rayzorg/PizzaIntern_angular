@@ -28,7 +28,6 @@ export class MapLocation implements AfterViewInit{
     .addTo(this.map)
     .bindPopup('Wijngaard 36, Aalst')
     .openPopup();
-
   }
 
   constructor() { }

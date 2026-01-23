@@ -14,10 +14,10 @@ import { ChangeDetectorRef } from '@angular/core';
 export class Login {
 
   errorMessages: string[] = [];
-isRegisterMode = false;
-name='';
-phoneNumber='';
- email = '';
+  isRegisterMode = false;
+  name='';
+  phoneNumber='';
+  email = '';
   password = '';
   error = '';
   loading = false;
@@ -109,5 +109,13 @@ phoneNumber='';
 
   toggleMode() {
   this.isRegisterMode = !this.isRegisterMode;
+
+   this.name = '';
+  this.phoneNumber = '';
+  this.email = '';
+  this.password = '';
+  this.errorMessages = [];
+  this.error = '';
+  this.loading = false;
 }
 }
