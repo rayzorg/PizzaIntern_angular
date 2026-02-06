@@ -1,12 +1,45 @@
-<h1>Address</h1>
-<h4>Wijngaard 36<br>Aalst, Belgium</h4>
+<div class="container my-5">
+  <div class="row g-4">
+    
+    <!-- Address -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-uppercase text-muted mb-3">Address</h5>
+          <p class="card-text fs-5 mb-0">
+            Wijngaard 36<br>
+            Aalst, Belgium
+          </p>
+        </div>
+      </div>
+    </div>
 
-<h1>Opening Hours</h1>
-<h4>Monday – Friday: 9:00 – 18:00<br>
-Saturday: 10:00 – 16:00<br>
-Sunday: Closed</h4>
+    <!-- Opening Hours -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-uppercase text-muted mb-3">Opening Hours</h5>
+          <ul class="list-unstyled fs-5 mb-0">
+            <li><strong>Monday – Friday:</strong> 9:00 – 18:00</li>
+            <li><strong>Saturday:</strong> 10:00 – 16:00</li>
+            <li><strong>Sunday:</strong> Closed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
+  </div>
 
-<div class="map-wrapper">
-  <app-map-location></app-map-location>
+  <!-- Map -->
+  <div class="row mt-4">
+    <div class="col">
+      <div class="card shadow-sm">
+        <div class="card-body p-0">
+          <div class="ratio ratio-16x9">
+            <app-map-location></app-map-location>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

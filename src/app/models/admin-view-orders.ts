@@ -1,5 +1,5 @@
-export interface OrderResponse {
-  publicId: string;
+export interface AdminViewOrders {
+  orderId: number;
   totalPrice: number;
   status: string;
   createdAt: string;

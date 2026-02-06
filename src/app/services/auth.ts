@@ -13,7 +13,9 @@ export class Auth {
    private tokenKey = 'jwtToken';
 
 
-   private usernameSubject = new BehaviorSubject<string | null>(null);
+   private emailSubject = new BehaviorSubject<string | null>(null);
+  email$ = this.emailSubject.asObservable();
+private usernameSubject = new BehaviorSubject<string | null>(null);
   username$ = this.usernameSubject.asObservable();
 
   private roleSubject = new BehaviorSubject<string | null>(null);
@@ -52,11 +54,13 @@ role$ = this.roleSubject.asObservable();
   private setUserFromToken(token: string) {
   try {
     const payload = jwtDecode<JwtPayload>(token);
-    this.usernameSubject.next(payload.sub);
-    this.roleSubject.next(payload.role); 
+    this.emailSubject.next(payload.name);
+    this.roleSubject.next(payload.role);
+    this.usernameSubject.next(payload.sub) ;
   } catch {
-    this.usernameSubject.next(null);
+    this.emailSubject.next(null);
     this.roleSubject.next(null);
+    this.usernameSubject.next(null);
   }
 }
   getToken() {
@@ -65,17 +69,19 @@ role$ = this.roleSubject.asObservable();
 
   logout() {
     localStorage.removeItem(this.tokenKey);
-      this.usernameSubject.next(null);
+      this.emailSubject.next(null);
         this.roleSubject.next(null);
+            this.usernameSubject.next(null);
+
 
   }
 
    isLoggedIn(): boolean {
-    return !!this.usernameSubject.value;
+    return !!this.emailSubject.value;
   }
 
   getUser() {
-    return this.usernameSubject.value;
+    return this.emailSubject.value;
   }
 
   private restoreUserFromToken() {

@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class Myorders implements OnInit {
 
 
-expandedOrders = new Set<number>();
+expandedOrders = new Set<string>();
 
  order$!: Observable<OrderSummary[]>;
   loading = true;
@@ -29,15 +29,15 @@ expandedOrders = new Set<number>();
   }
 
   
-toggle(orderId: number) {
-  if (this.expandedOrders.has(orderId)) {
-    this.expandedOrders.delete(orderId);
+toggle(publicId: string) {
+  if (this.expandedOrders.has(publicId)) {
+    this.expandedOrders.delete(publicId);
   } else {
-    this.expandedOrders.add(orderId);
+    this.expandedOrders.add(publicId);
   }
 }
 
-isExpanded(orderId: number): boolean {
-  return this.expandedOrders.has(orderId);
+isExpanded(publicId: string): boolean {
+  return this.expandedOrders.has(publicId);
 }
 }

@@ -9,16 +9,17 @@ import { Myorders } from './myorders/myorders';
 import { adminGuardGuard } from './admin-guard-guard';
 import { customerGuard } from './customer-guard';
 import { Contact } from './contact/contact';
-
+import { AccessDenied } from './access-denied/access-denied';
 
 
 export const routes: Routes = [
+  { path: 'access-denied', component: AccessDenied },
   { path: 'contact', component: Contact },
 
   {path:'my-orders',component:Myorders,canActivate:[customerGuard]},
   { path: 'login', component: Login },
   
-    { path: 'order-confirmation/:id', component: OrderConfirmation },
+    { path: 'order-confirmation/:publicId', component: OrderConfirmation },
   { path: '', component: Menu },
   { path: 'cart', component: Cart },
   

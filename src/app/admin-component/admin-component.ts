@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../services/order';
 import { Observable } from 'rxjs';
-import { OrderResponse } from '../models/order-response';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { map } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { Admin } from '../services/admin';
+import { AdminViewOrders } from '../models/admin-view-orders';
 
 @Component({
   selector: 'app-admin-component',
@@ -16,15 +15,15 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class AdminComponent implements OnInit{
 
-order$!: Observable<OrderResponse[]>;
+order$!: Observable<AdminViewOrders[]>;
 expandedOrderIds = new Set<number>();
 sortDirection: 'asc' | 'desc' = 'desc';
 
 
-  constructor(private orderService: OrderService,private cdr: ChangeDetectorRef) {}
+  constructor(private adminService: Admin,private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.order$ = this.orderService.getAllOrders();
+    this.order$ = this.adminService.getAllOrders();
   }
   toggle(orderId: number) {
     if (this.expandedOrderIds.has(orderId)) {
@@ -55,7 +54,7 @@ sortedOrders(orders: any[]) {
 
 
 closeOrder(orderId: number) {
-  this.orderService.closeOrder(orderId).subscribe({
+  this.adminService.closeOrder(orderId).subscribe({
     next: updatedOrder => {
       this.order$ = this.order$.pipe(
         map(orders =>

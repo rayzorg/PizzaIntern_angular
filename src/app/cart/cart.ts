@@ -88,9 +88,12 @@ isSubmitting = false;
      this.cartService.placeOrder(this.pickupTime, this.email).subscribe({
   next: response => {
     this.errorMessages = [];
+      console.log('Full response from backend:', response);
+
     //alert(`Order placed! Order ID: ${response.orderId}. Pickup at ${new Date(response.pickupTime!).toLocaleString()}`);
+    console.log("ijijijijjiijijiiiiiii"+response.publicId);
     this.cartService.clear();
-    this.router.navigate(['/order-confirmation', response.orderId]);
+    this.router.navigate(['/order-confirmation', response.publicId]);
   },
   error: err => {
     this.errorMessages = []; 

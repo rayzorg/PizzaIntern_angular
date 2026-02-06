@@ -18,12 +18,12 @@
           <td>
             <button
               class="btn btn-sm btn-outline-secondary"
-              (click)="toggle(order.orderId)">
-              {{ isExpanded(order.orderId) ? '−' : '+' }}
+              (click)="toggle(order.publicId)">
+              {{ isExpanded(order.publicId) ? '−' : '+' }}
             </button>
           </td>
 
-          <td>{{ order.orderId }}</td>
+          <td>{{ order.publicId }}</td>
           <td>
             <span class="badge bg-info">
               {{ order.status }}
@@ -33,7 +33,7 @@
           <td>{{ order.createdAt | date:'short' }}</td>
         </tr>
 
-        <tr *ngIf="isExpanded(order.orderId)">
+        <tr *ngIf="isExpanded(order.publicId)">
           <td colspan="5" class="bg-light">
             <table class="table table-sm mb-0">
               <thead>

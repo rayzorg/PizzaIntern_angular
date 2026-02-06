@@ -8,8 +8,7 @@ import { Navbar } from './navbar/navbar';
   standalone: true,
   imports: [Navbar,RouterOutlet],
   template: `
-      <app-navbar></app-navbar>
-
+    <app-navbar></app-navbar>
     <router-outlet></router-outlet>
   `
 })

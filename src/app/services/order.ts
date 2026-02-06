@@ -14,9 +14,6 @@ export class OrderService {
 
   constructor(private http: HttpClient,private auth:Auth) {}
 
-  getOrderHistory(userId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/user/${userId}`);
-  }
   getUserOrders() {
     return this.http.get<OrderSummary[]>(
     'http://localhost:8080/api/orders/myorders'
@@ -24,21 +21,10 @@ export class OrderService {
   }
 
 
-getOrderById(id: number): Observable<OrderResponse> {
-    return this.http.get<OrderResponse>(`http://localhost:8080/api/orders/${id}`);
+getOrderById(publicId: string): Observable<OrderResponse> {
+    return this.http.get<OrderResponse>(`http://localhost:8080/api/orders/${publicId}`);
   }
 
-    getAllOrders() {
-  return this.http.get<OrderResponse[]>(
-    'http://localhost:8080/api/admin/orders'
-  );
-}
-
-closeOrder(orderId: number) {
-  return this.http.put<OrderResponse>(
-    `http://localhost:8080/api/admin/orders/${orderId}/close`,
-    {}
-  );
-}
+  
 
 }

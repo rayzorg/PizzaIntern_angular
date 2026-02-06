@@ -1,5 +1,5 @@
 export interface OrderSummary {
-  orderId: number;
+  publicId: string;
   totalPrice: number;
   status: string;
   createdAt: string;

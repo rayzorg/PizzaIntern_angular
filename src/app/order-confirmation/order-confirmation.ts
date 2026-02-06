@@ -5,11 +5,11 @@ import { OnInit } from '@angular/core';
 import { OrderService } from '../services/order';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-order-confirmation',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './order-confirmation.html',
   styleUrl: './order-confirmation.css',
 })
@@ -23,8 +23,8 @@ export class OrderConfirmation implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-console.log('ORDER ID FROM ROUTE:', id);
+    const id = this.route.snapshot.paramMap.get('publicId')!;
+    console.log('ORDER ID FROM ROUTE:', id);
 
 
 

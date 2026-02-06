@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [CommonModule,FormsModule],
@@ -21,7 +21,7 @@ export class Login {
   password = '';
   error = '';
   loading = false;
-  constructor(private authService:Auth,private router: Router,private cdr: ChangeDetectorRef){
+  constructor( private route: ActivatedRoute,private authService:Auth,private router: Router,private cdr: ChangeDetectorRef){
 
   }
 
@@ -31,7 +31,8 @@ export class Login {
 
     this.authService.login(this.email, this.password).subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        this.loading = false;
+        this.navigateAfterLogin();
       },
       error: () => {
         this.error = 'Invalid email or password';
@@ -39,8 +40,6 @@ export class Login {
       }
     });
   }
-
-
 
   submit() {
   this.error = '';
@@ -51,7 +50,7 @@ export class Login {
       .subscribe({
         next: () => {
           this.loading = false;
-          this.router.navigate(['/']); 
+        this.navigateAfterLogin();
         },
         error: err => {
     this.errorMessages = []; 
@@ -77,7 +76,7 @@ export class Login {
       .subscribe({
         next: () => {
           this.loading = false;
-          this.router.navigate(['/']); 
+        this.navigateAfterLogin();
         },
         error: err => {
     this.errorMessages = []; 
@@ -118,4 +117,12 @@ export class Login {
   this.error = '';
   this.loading = false;
 }
+
+private navigateAfterLogin() {
+  const returnUrl =
+    this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+
+    this.router.navigateByUrl(returnUrl);
+}
+
 }
