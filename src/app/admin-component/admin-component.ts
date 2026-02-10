@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { map } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
-import { Admin } from '../services/admin';
+import { Admin } from '../services/adminService';
 import { AdminViewOrders } from '../models/admin-view-orders';
 
 @Component({

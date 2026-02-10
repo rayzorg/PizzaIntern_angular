@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PizzaService } from '../services/pizza';
+import { PizzaService } from '../services/pizzaService';
 import { Pizza } from '../models/pizza';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';

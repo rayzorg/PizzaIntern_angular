@@ -5,7 +5,7 @@ import { OrderConfirmation } from './order-confirmation/order-confirmation';
 import { AdminComponent } from './admin-component/admin-component';
 import { AdminPizzaAvailability } from './admin-pizza-availability/admin-pizza-availability';
 import { Login } from './login/login';
-import { Myorders } from './myorders/myorders';
+import { Myorders } from './my-orders/myorders';
 import { adminGuardGuard } from './admin-guard-guard';
 import { customerGuard } from './customer-guard';
 import { Contact } from './contact/contact';

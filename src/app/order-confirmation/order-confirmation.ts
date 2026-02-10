@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { OrderResponse } from '../models/order-response';
 import { ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core';
-import { OrderService } from '../services/order';
+import { OrderService } from '../services/orderService';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';

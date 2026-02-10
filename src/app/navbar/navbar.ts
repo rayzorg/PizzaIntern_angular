@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { CartService } from '../services/cart';
+import { CartService } from '../services/cartService';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Auth } from '../services/auth';
+import { Auth } from '../services/authService';
 import { Router } from '@angular/router';
 
 @Component({

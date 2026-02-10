@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../services/cart';
+import { CartService } from '../services/cartService';
 import { CartItem } from '../models/cart-item';
-import { OrderService } from '../services/order';
+import { OrderService } from '../services/orderService';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth } from '../services/auth';
+import { Auth } from '../services/authService';
 
 @Component({
   selector: 'app-cart',

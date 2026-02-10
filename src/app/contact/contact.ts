@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MapLocation } from '../map-location/map-location';
 import { ContactForm } from '../models/contact-form';
-import { ContactService } from '../services/contact';
+import { ContactService } from '../services/contactService';
 import { NgModel } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PizzaService } from '../services/pizza';
-import { CartService } from '../services/cart';
+import { PizzaService } from '../services/pizzaService';
+import { CartService } from '../services/cartService';
 import { CartPreview } from '../cart-preview/cart-preview';
 import { FormsModule } from '@angular/forms';
 import { Pizza } from '../models/pizza';

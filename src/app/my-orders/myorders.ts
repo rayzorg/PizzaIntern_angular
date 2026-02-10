@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderSummary } from '../models/orderSummary';
-import { OrderService } from '../services/order';
+import { OrderService } from '../services/orderService';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../services/cart';
+import { CartService } from '../services/cartService';
 import { RouterModule } from '@angular/router';
 
 @Component({
