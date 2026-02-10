@@ -6,6 +6,4 @@ import { RouterModule } from '@angular/router';
   templateUrl: './access-denied.html',
   styleUrl: './access-denied.css',
 })
-export class AccessDenied {
-
-}
+export class AccessDenied {}

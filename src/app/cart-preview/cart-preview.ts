@@ -8,10 +8,9 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './cart-preview.html',
-  styleUrls: ['./cart-preview.css']
+  styleUrls: ['./cart-preview.css'],
 })
 export class CartPreview {
-
   private cartService = inject(CartService);
   cartItems$ = this.cartService.cartItems$;
 

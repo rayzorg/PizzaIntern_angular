@@ -11,21 +11,20 @@ import { ChangeDetectorRef } from '@angular/core';
   templateUrl: './admin-pizza-availability.html',
   styleUrl: './admin-pizza-availability.css',
 })
-export class AdminPizzaAvailability implements OnInit{
-
-  pizzas$!: Observable<Pizza[]>;   
-  constructor(private pizzaService: PizzaService,private cdr: ChangeDetectorRef) {}
+export class AdminPizzaAvailability implements OnInit {
+  pizzas$!: Observable<Pizza[]>;
+  constructor(
+    private pizzaService: PizzaService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
-      this.pizzas$ = this.pizzaService.getAllPizzas();
-
+    this.pizzas$ = this.pizzaService.getAllPizzas();
   }
   toggle(pizza: Pizza) {
-    this.pizzaService
-      .updateAvailability(pizza.id, !pizza.available)
-      .subscribe(() => {
-        pizza.available = !pizza.available; 
-        this.cdr.markForCheck();
-      });
+    this.pizzaService.updateAvailability(pizza.id, !pizza.available).subscribe(() => {
+      pizza.available = !pizza.available;
+      this.cdr.markForCheck();
+    });
   }
 }

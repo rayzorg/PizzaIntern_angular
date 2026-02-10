@@ -11,33 +11,27 @@ import { Observable } from 'rxjs';
   styleUrl: './myorders.css',
 })
 export class Myorders implements OnInit {
+  expandedOrders = new Set<string>();
 
-
-expandedOrders = new Set<string>();
-
- order$!: Observable<OrderSummary[]>;
+  order$!: Observable<OrderSummary[]>;
   loading = true;
 
   constructor(private orderService: OrderService) {}
 
   ngOnInit(): void {
-    this.order$=this.orderService.getUserOrders();
-    this.order$.subscribe(o => console.log(o));
-
-
-   
+    this.order$ = this.orderService.getUserOrders();
+    this.order$.subscribe((o) => console.log(o));
   }
 
-  
-toggle(publicId: string) {
-  if (this.expandedOrders.has(publicId)) {
-    this.expandedOrders.delete(publicId);
-  } else {
-    this.expandedOrders.add(publicId);
+  toggle(publicId: string) {
+    if (this.expandedOrders.has(publicId)) {
+      this.expandedOrders.delete(publicId);
+    } else {
+      this.expandedOrders.add(publicId);
+    }
   }
-}
 
-isExpanded(publicId: string): boolean {
-  return this.expandedOrders.has(publicId);
-}
+  isExpanded(publicId: string): boolean {
+    return this.expandedOrders.has(publicId);
+  }
 }

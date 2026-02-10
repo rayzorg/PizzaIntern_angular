@@ -1,9 +1,72 @@
-<h2>🧾 Admin – Orders</h2>
+<div class="card mb-4 bg-light text-dark shadow-sm">
+  <div class="card-body">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Filter by email</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by customer email"
+          [(ngModel)]="emailFilter"
+        />
+        <small class="text-muted"> Type at least 3 characters to search </small>
+      </div>
 
+      <div class="col-md-6 text-md-end">
+        <label class="form-label fw-semibold d-block">Quick filters</label>
+        <div class="btn-group">
+          <button
+            class="btn"
+            [ngClass]="showPreparingOnly ? 'btn-warning text-dark' : 'btn-outline-warning'"
+            (click)="togglePreparingOnly()"
+          >
+            Preparing
+          </button>
 
+          <button
+            class="btn btn-outline-primary"
+            [class.active]="dateFilter === 'today'"
+            (click)="setDateFilter('today')"
+          >
+            Today
+          </button>
+          <button
+            class="btn btn-outline-primary"
+            [class.active]="dateFilter === 'yesterday'"
+            (click)="setDateFilter('yesterday')"
+          >
+            Yesterday
+          </button>
+          <button
+            class="btn btn-outline-secondary"
+            [class.active]="dateFilter === 'all'"
+            (click)="setDateFilter('all')"
+          >
+            All
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div
+  *ngIf="order$ | async as orders"
+  class="d-flex justify-content-between align-items-center mb-2"
+>
+  <div class="fw-semibold">
+    Showing
+    <span class="badge bg-primary">
+      {{ filteredOrders(orders).length }}
+    </span>
+    orders
+  </div>
 
-
+  <div class="text-muted small">
+    Sorted by pickup time
+    {{ sortDirection === 'asc' ? '↑' : '↓' }}
+  </div>
+</div>
 
 <div *ngIf="order$ | async as orders">
   <table class="table table-striped align-middle">
@@ -12,54 +75,47 @@
         <th></th>
         <th>ID</th>
         <th>Email</th>
-<th (click)="sortByPickupTime()" style="cursor: pointer">
-  Pickup Time
-  <span *ngIf="sortDirection === 'asc'">⬆️</span>
-  <span *ngIf="sortDirection === 'desc'">⬇️</span>
-</th>        <th>Status</th>
+        <th (click)="sortByPickupTime()" style="cursor: pointer">
+          Pickup Time
+          <span *ngIf="sortDirection === 'asc'">⬆️</span>
+          <span *ngIf="sortDirection === 'desc'">⬇️</span>
+        </th>
+        <th>Status</th>
         <th>Total</th>
       </tr>
     </thead>
 
     <tbody>
-      <ng-container *ngFor="let order of sortedOrders(orders)">
-
+      <ng-container *ngFor="let order of filteredOrders(orders)">
         <!-- Summary row -->
         <tr>
           <td>
-            <button
-              class="btn btn-sm btn-outline-secondary"
-              (click)="toggle(order.orderId)"
-            >
+            <button class="btn btn-sm btn-outline-secondary" (click)="toggle(order.orderId)">
               {{ isExpanded(order.orderId) ? '−' : '+' }}
             </button>
           </td>
 
           <td>{{ order.orderId }}</td>
           <td>{{ order.email }}</td>
-          <td>{{ order.pickupTime | date:'short' }}</td>
+          <td>{{ order.pickupTime | date: 'short' }}</td>
 
           <td>
-            <span class="badge bg-warning" *ngIf="order.status === 'CREATED'">
-              CREATED
-            </span>
-            <span class="badge bg-warning" *ngIf="order.status === 'PREPARING'">
-              PREPARING
-            </span>
-             <span class="badge bg-success" *ngIf="order.status === 'CLOSED'">
-              CLOSED
-            </span>
-            <button
-  class="btn btn-sm btn-success"
-  *ngIf="order.status === 'PREPARING'"
-  (click)="closeOrder(order.orderId)"
->
-  Mark as picked up
-</button>
+            <span class="badge bg-secondary" *ngIf="order.status === 'CREATED'">CREATED</span>
+            <span class="badge bg-warning text-dark" *ngIf="order.status === 'PREPARING'"
+              >PREPARING</span
+            >
+            <span class="badge bg-danger" *ngIf="order.status === 'CLOSED'">CLOSED</span>
 
+            <button
+              class="btn btn-sm btn-success"
+              *ngIf="order.status === 'PREPARING'"
+              (click)="closeOrder(order.orderId)"
+            >
+              Mark as picked up
+            </button>
           </td>
 
-          <td>{{ order.totalPrice | currency:'EUR' }}</td>
+          <td>{{ order.totalPrice | currency: 'EUR' }}</td>
         </tr>
 
         <!-- Expanded row -->
@@ -81,14 +137,13 @@
                   <td>{{ item.size }}</td>
                   <td>{{ item.quantity }}</td>
                   <td>
-                    {{ item.price * item.quantity | currency:'EUR' }}
+                    {{ item.price * item.quantity | currency: 'EUR' }}
                   </td>
                 </tr>
               </tbody>
             </table>
           </td>
         </tr>
-
       </ng-container>
     </tbody>
   </table>

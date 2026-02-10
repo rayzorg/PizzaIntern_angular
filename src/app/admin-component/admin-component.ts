@@ -9,18 +9,22 @@ import { AdminViewOrders } from '../models/admin-view-orders';
 
 @Component({
   selector: 'app-admin-component',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-component.html',
   styleUrl: './admin-component.css',
 })
-export class AdminComponent implements OnInit{
+export class AdminComponent implements OnInit {
+  order$!: Observable<AdminViewOrders[]>;
+  expandedOrderIds = new Set<number>();
+  sortDirection: 'asc' | 'desc' = 'desc';
+  emailFilter: string = '';
+  dateFilter: 'today' | 'yesterday' | 'all' = 'today';
+  showPreparingOnly = false;
 
-order$!: Observable<AdminViewOrders[]>;
-expandedOrderIds = new Set<number>();
-sortDirection: 'asc' | 'desc' = 'desc';
-
-
-  constructor(private adminService: Admin,private cdr: ChangeDetectorRef) {}
+  constructor(
+    private adminService: Admin,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.order$ = this.adminService.getAllOrders();
@@ -37,39 +41,86 @@ sortDirection: 'asc' | 'desc' = 'desc';
     return this.expandedOrderIds.has(orderId);
   }
 
- sortByPickupTime() {
-  this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-}
+  sortByPickupTime() {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  }
 
-sortedOrders(orders: any[]) {
-  return [...orders].sort((a, b) => {
-    const timeA = new Date(a.pickupTime).getTime();
-    const timeB = new Date(b.pickupTime).getTime();
+  sortedOrders(orders: any[]) {
+    return [...orders].sort((a, b) => {
+      const timeA = new Date(a.pickupTime).getTime();
+      const timeB = new Date(b.pickupTime).getTime();
 
-    return this.sortDirection === 'asc'
-      ? timeA - timeB
-      : timeB - timeA;
-  });
-}
+      return this.sortDirection === 'asc' ? timeA - timeB : timeB - timeA;
+    });
+  }
 
+  closeOrder(orderId: number) {
+    this.adminService.closeOrder(orderId).subscribe({
+      next: (updatedOrder) => {
+        this.order$ = this.order$.pipe(
+          map((orders) =>
+            orders.map((o) => (o.orderId === updatedOrder.orderId ? updatedOrder : o)),
+          ),
+        );
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        alert(err.error ?? 'Failed to close order');
+      },
+    });
+  }
+  togglePreparingOnly() {
+    this.showPreparingOnly = !this.showPreparingOnly;
+  }
 
-closeOrder(orderId: number) {
-  this.adminService.closeOrder(orderId).subscribe({
-    next: updatedOrder => {
-      this.order$ = this.order$.pipe(
-        map(orders =>
-          orders.map(o =>
-            o.orderId === updatedOrder.orderId ? updatedOrder : o
-          )
-        )
-      );
-      this.cdr.markForCheck();
-    },
-    error: err => {
-      alert(err.error ?? 'Failed to close order');
+  filteredOrders(orders: AdminViewOrders[]) {
+    let result = [...orders];
+
+    //  Email filter
+    if (this.emailFilter.trim().length >= 3) {
+      const filter = this.emailFilter.toLowerCase();
+      result = result.filter((order) => order.email.toLowerCase().startsWith(filter));
     }
-  });
-}
 
+    // Date filter
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
+    if (this.dateFilter === 'today') {
+      result = result.filter((order) => {
+        const pickup = new Date(order.pickupTime);
+        pickup.setHours(0, 0, 0, 0);
+        return pickup.getTime() === today.getTime();
+      });
+    }
+
+    if (this.dateFilter === 'yesterday') {
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+
+      result = result.filter((order) => {
+        const pickup = new Date(order.pickupTime);
+        pickup.setHours(0, 0, 0, 0);
+        return pickup.getTime() === yesterday.getTime();
+      });
+    }
+    //  Status filter (PREPARING only)
+    if (this.showPreparingOnly) {
+      result = result.filter((order) => order.status === 'PREPARING');
+    }
+
+    // Sorting
+    result.sort((a, b) => {
+      const timeA = new Date(a.pickupTime).getTime();
+      const timeB = new Date(b.pickupTime).getTime();
+
+      return this.sortDirection === 'asc' ? timeA - timeB : timeB - timeA;
+    });
+
+    return result;
+  }
+
+  setDateFilter(filter: 'today' | 'yesterday' | 'all') {
+    this.dateFilter = filter;
+  }
 }

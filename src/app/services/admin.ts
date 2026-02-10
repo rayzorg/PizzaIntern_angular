@@ -7,16 +7,14 @@ import { AdminViewOrders } from '../models/admin-view-orders';
 export class Admin {
   constructor(private http: HttpClient) {}
 
-    getAllOrders() {
-  return this.http.get<AdminViewOrders[]>(
-    'http://localhost:8080/api/admin/orders'
-  );
-}
+  getAllOrders() {
+    return this.http.get<AdminViewOrders[]>('http://localhost:8080/api/admin/orders');
+  }
 
-closeOrder(orderId: number) {
-  return this.http.put<AdminViewOrders>(
-    `http://localhost:8080/api/admin/orders/${orderId}/close`,
-    {}
-  );
-}
+  closeOrder(orderId: number) {
+    return this.http.put<AdminViewOrders>(
+      `http://localhost:8080/api/admin/orders/${orderId}/close`,
+      {},
+    );
+  }
 }

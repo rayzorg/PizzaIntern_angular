@@ -15,8 +15,7 @@
       <td>{{ pizza.name }}</td>
       <td>€ {{ pizza.price }}</td>
       <td>
-        <span [class.text-success]="pizza.available"
-              [class.text-danger]="!pizza.available">
+        <span [class.text-success]="pizza.available" [class.text-danger]="!pizza.available">
           {{ pizza.available ? 'Available' : 'Unavailable' }}
         </span>
       </td>
@@ -25,7 +24,8 @@
           class="btn btn-sm"
           [class.btn-danger]="pizza.available"
           [class.btn-success]="!pizza.available"
-          (click)="toggle(pizza)">
+          (click)="toggle(pizza)"
+        >
           {{ pizza.available ? 'Disable' : 'Enable' }}
         </button>
       </td>

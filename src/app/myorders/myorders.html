@@ -13,12 +13,9 @@
 
     <tbody>
       <ng-container *ngFor="let order of orders">
-
         <tr>
           <td>
-            <button
-              class="btn btn-sm btn-outline-secondary"
-              (click)="toggle(order.publicId)">
+            <button class="btn btn-sm btn-outline-secondary" (click)="toggle(order.publicId)">
               {{ isExpanded(order.publicId) ? '−' : '+' }}
             </button>
           </td>
@@ -29,8 +26,8 @@
               {{ order.status }}
             </span>
           </td>
-          <td>{{ order.totalPrice | currency:'EUR' }}</td>
-          <td>{{ order.createdAt | date:'short' }}</td>
+          <td>{{ order.totalPrice | currency: 'EUR' }}</td>
+          <td>{{ order.createdAt | date: 'short' }}</td>
         </tr>
 
         <tr *ngIf="isExpanded(order.publicId)">
@@ -49,19 +46,16 @@
                   <td>{{ item.pizzaName }}</td>
                   <td>{{ item.quantity }}</td>
                   <td>
-                    {{ item.price * item.quantity | currency:'EUR' }}
+                    {{ item.price * item.quantity | currency: 'EUR' }}
                   </td>
                 </tr>
               </tbody>
             </table>
           </td>
         </tr>
-
       </ng-container>
     </tbody>
   </table>
 </div>
 
-<ng-template #loading>
-  Loading orders...
-</ng-template>
+<ng-template #loading> Loading orders... </ng-template>

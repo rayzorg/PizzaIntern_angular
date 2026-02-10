@@ -8,9 +8,8 @@ describe('AdminPizzaAvailability', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminPizzaAvailability]
-    })
-    .compileComponents();
+      imports: [AdminPizzaAvailability],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AdminPizzaAvailability);
     component = fixture.componentInstance;

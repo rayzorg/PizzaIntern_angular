@@ -1,13 +1,12 @@
 <div class="container my-5">
   <div class="row g-4">
-    
     <!-- Address -->
     <div class="col-md-6">
       <div class="card h-100 shadow-sm">
         <div class="card-body">
           <h5 class="card-title text-uppercase text-muted mb-3">Address</h5>
           <p class="card-text fs-5 mb-0">
-            Wijngaard 36<br>
+            Wijngaard 36<br />
             Aalst, Belgium
           </p>
         </div>
@@ -27,7 +26,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- Map -->
@@ -42,4 +40,77 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="container my-5">
+  <!-- Global errors -->
+  <div *ngIf="errorMessages.length" class="alert alert-danger">
+    <ul class="mb-0">
+      <li *ngFor="let msg of errorMessages">{{ msg }}</li>
+    </ul>
+  </div>
+
+  <!-- Success -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <!-- Name -->
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input class="form-control" [(ngModel)]="contact.name" name="name" placeholder="Name" />
+    <small class="text-danger" *ngIf="fieldErrors['name']">{{ fieldErrors['name'] }}</small>
+  </div>
+
+  <!-- Email -->
+  <div class="mb-3">
+    <label class="form-label">Email</label>
+    <input class="form-control" [(ngModel)]="contact.email" name="email" placeholder="Email" />
+    <small class="text-danger" *ngIf="fieldErrors['email']">{{ fieldErrors['email'] }}</small>
+  </div>
+  <!-- id -->
+  <div class="mb-3">
+    <label class="form-label">Id</label>
+    <input class="form-control" [(ngModel)]="contact.id" name="id" placeholder="Id" />
+    <small class="text-danger" *ngIf="fieldErrors['id']">{{ fieldErrors['id'] }}</small>
+  </div>
+  <!-- Phone -->
+  <div class="mb-3">
+    <label class="form-label">Phone</label>
+    <input
+      class="form-control"
+      [(ngModel)]="contact.phoneNumber"
+      name="phoneNumber"
+      placeholder="Phone"
+    />
+    <small class="text-danger" *ngIf="fieldErrors['phoneNumber']">{{
+      fieldErrors['phoneNumber']
+    }}</small>
+  </div>
+
+  <!-- Subject -->
+  <div class="mb-3">
+    <label class="form-label">Subject</label>
+    <select class="form-select" [(ngModel)]="contact.subject" name="subject">
+      <option value="question">Question</option>
+      <option value="order-error">Order problem</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+
+  <!-- Message -->
+  <div class="mb-3">
+    <label class="form-label">Message</label>
+    <textarea
+      rows="4"
+      class="form-control"
+      [(ngModel)]="contact.message"
+      name="message"
+      placeholder="Message"
+    ></textarea>
+    <small class="text-danger" *ngIf="fieldErrors['message']">{{ fieldErrors['message'] }}</small>
+  </div>
+
+  <!-- Submit button -->
+  <button type="button" class="btn btn-primary w-100" (click)="submit()">Send Message</button>
 </div>

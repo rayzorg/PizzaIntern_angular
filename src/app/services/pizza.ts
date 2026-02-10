@@ -5,7 +5,6 @@ import { Pizza } from '../models/pizza';
 
 @Injectable({ providedIn: 'root' })
 export class PizzaService {
-
   private apiUrl = 'http://localhost:8080/api/pizzas';
 
   constructor(private http: HttpClient) {}
@@ -15,10 +14,8 @@ export class PizzaService {
   }
 
   updateAvailability(id: number, available: boolean) {
-     return this.http.put(
-    `http://localhost:8080/api/admin/pizzas/${id}/availability`,
-    null,
-    { params: { available } }
-  );
+    return this.http.put(`http://localhost:8080/api/admin/pizzas/${id}/availability`, null, {
+      params: { available },
+    });
   }
 }

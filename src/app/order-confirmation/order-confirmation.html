@@ -1,5 +1,4 @@
 <div class="container my-5" *ngIf="order$ | async as order; else loading">
-
   <!-- Success header -->
   <div class="card shadow-sm mb-4 border-success">
     <div class="card-body text-center">
@@ -8,9 +7,7 @@
         Order confirmed!
       </h2>
 
-      <p class="mb-1">
-        Thank you for your order.
-      </p>
+      <p class="mb-1">Thank you for your order.</p>
 
       <p class="text-muted mb-0">
         A confirmation email has been sent to
@@ -21,15 +18,14 @@
 
   <!-- Order summary -->
   <div class="card shadow-sm mb-4">
-    <div class="card-header fw-bold">
-      Order details
-    </div>
+    <div class="card-header fw-bold">Order details</div>
 
     <div class="card-body">
       <div class="row mb-2">
         <div class="col-md-6">
           <p><strong>Order ID:</strong> {{ order.publicId }}</p>
-          <p><strong>Status:</strong>
+          <p>
+            <strong>Status:</strong>
             <span class="badge bg-info text-dark">
               {{ order.status }}
             </span>
@@ -37,11 +33,13 @@
         </div>
 
         <div class="col-md-6">
-          <p><strong>Total:</strong>
-            {{ order.totalPrice | currency:'EUR' }}
+          <p>
+            <strong>Total:</strong>
+            {{ order.totalPrice | currency: 'EUR' }}
           </p>
-          <p><strong>Pickup time:</strong>
-            {{ order.pickupTime | date:'short' }}
+          <p>
+            <strong>Pickup time:</strong>
+            {{ order.pickupTime | date: 'short' }}
           </p>
         </div>
       </div>
@@ -50,9 +48,7 @@
 
   <!-- Items table -->
   <div class="card shadow-sm mb-4">
-    <div class="card-header fw-bold">
-      Your order
-    </div>
+    <div class="card-header fw-bold">Your order</div>
 
     <div class="table-responsive">
       <table class="table table-striped mb-0">
@@ -71,18 +67,16 @@
             <td>{{ item.size }}</td>
             <td class="text-center">{{ item.quantity }}</td>
             <td class="text-end">
-              {{ item.price * item.quantity | currency:'EUR' }}
+              {{ item.price * item.quantity | currency: 'EUR' }}
             </td>
           </tr>
         </tbody>
 
         <tfoot>
           <tr class="table-light">
-            <th colspan="3" class="text-end">
-              Total
-            </th>
+            <th colspan="3" class="text-end">Total</th>
             <th class="text-end">
-              {{ order.totalPrice | currency:'EUR' }}
+              {{ order.totalPrice | currency: 'EUR' }}
             </th>
           </tr>
         </tfoot>
@@ -92,9 +86,7 @@
 
   <!-- Actions -->
   <div class="text-center">
-    <a routerLink="/" class="btn btn-primary btn-lg">
-      Back to menu
-    </a>
+    <a routerLink="/" class="btn btn-primary btn-lg"> Back to menu </a>
   </div>
 </div>
 

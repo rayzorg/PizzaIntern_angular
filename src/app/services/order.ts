@@ -6,25 +6,21 @@ import { OrderSummary } from '../models/orderSummary';
 import { Auth } from './auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
-
   private apiUrl = 'http://localhost:8080/api/orders';
 
-  constructor(private http: HttpClient,private auth:Auth) {}
+  constructor(
+    private http: HttpClient,
+    private auth: Auth,
+  ) {}
 
   getUserOrders() {
-    return this.http.get<OrderSummary[]>(
-    'http://localhost:8080/api/orders/myorders'
-  );
+    return this.http.get<OrderSummary[]>('http://localhost:8080/api/orders/myorders');
   }
 
-
-getOrderById(publicId: string): Observable<OrderResponse> {
+  getOrderById(publicId: string): Observable<OrderResponse> {
     return this.http.get<OrderResponse>(`http://localhost:8080/api/orders/${publicId}`);
   }
-
-  
-
 }

@@ -1,41 +1,60 @@
-<div class="container mt-5" style="max-width: 400px;">
-  
-
-<div *ngIf="errorMessages.length" class="alert alert-danger">
-  <ul>
-    <li *ngFor="let msg of errorMessages">{{ msg }}</li>
-  </ul>
-</div>
-
-
-
-
-
-
-<div class="card p-4" style="max-width: 400px; margin:auto;">
-  <h2 *ngIf="!isRegisterMode">Login</h2>
-  <h2 *ngIf="isRegisterMode">Register</h2>
-
-  <form (ngSubmit)="submit()">
-
-    <div *ngIf="isRegisterMode" class="mb-2">
-      <input type="text" class="form-control" placeholder="Name" [(ngModel)]="name" name="name" required>
-    </div>
-
-    <input type="email" class="form-control mb-2" placeholder="Email" [(ngModel)]="email" name="email" required>
-    <input type="password" class="form-control mb-2" placeholder="Password" [(ngModel)]="password" name="password" required>
-
-    <div *ngIf="isRegisterMode" class="mb-2">
-      <input type="text" class="form-control" placeholder="Phone number" [(ngModel)]="phoneNumber" name="phoneNumber">
-    </div>
-
-    <button class="btn btn-primary w-100">{{ isRegisterMode ? 'Register' : 'Login' }}</button>
-  </form>
-
-  <div class="text-center mt-2">
-    <a  (click)="toggleMode()">
-      {{ isRegisterMode ? 'Already have an account? Login' : 'No account? Register' }}
-    </a>
+<div class="container mt-5" style="max-width: 400px">
+  <div *ngIf="errorMessages.length" class="alert alert-danger">
+    <ul>
+      <li *ngFor="let msg of errorMessages">{{ msg }}</li>
+    </ul>
   </div>
 
+  <div class="card p-4" style="max-width: 400px; margin: auto">
+    <h2 *ngIf="!isRegisterMode">Login</h2>
+    <h2 *ngIf="isRegisterMode">Register</h2>
+
+    <form (ngSubmit)="submit()">
+      <div *ngIf="isRegisterMode" class="mb-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Name"
+          [(ngModel)]="name"
+          name="name"
+          required
+        />
+      </div>
+
+      <input
+        type="email"
+        class="form-control mb-2"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+        required
+      />
+      <input
+        type="password"
+        class="form-control mb-2"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+
+      <div *ngIf="isRegisterMode" class="mb-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Phone number"
+          [(ngModel)]="phoneNumber"
+          name="phoneNumber"
+        />
+      </div>
+
+      <button class="btn btn-primary w-100">{{ isRegisterMode ? 'Register' : 'Login' }}</button>
+    </form>
+
+    <div class="text-center mt-2">
+      <a (click)="toggleMode()">
+        {{ isRegisterMode ? 'Already have an account? Login' : 'No account? Register' }}
+      </a>
+    </div>
+  </div>
 </div>

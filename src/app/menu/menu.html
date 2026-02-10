@@ -1,27 +1,15 @@
-
-<div class="container mt-4">
+<div class="container mt-4" style="max-width: 600px">
   <app-cart-preview></app-cart-preview>
 </div>
 
 <div class="container mt-4">
   <div class="row g-4">
-
     @for (pizza of pizzas$ | async; track pizza.id) {
       <div class="col-12 col-md-4">
-
-        <div 
-          class="card h-100 shadow-sm d-flex flex-column"
-          [class.opacity-50]="!pizza.available"
-        >
-
-          <img
-            [src]="pizza.imageUrl"
-            class="pizza-img"
-            alt="{{ pizza.name }}"
-          />
+        <div class="card h-100 shadow-sm d-flex flex-column" [class.opacity-50]="!pizza.available">
+          <img [src]="pizza.imageUrl" class="pizza-img" alt="{{ pizza.name }}" />
 
           <div class="card-body d-flex flex-column">
-
             <h5 class="card-title">{{ pizza.name }}</h5>
 
             <p class="card-text text-muted">
@@ -54,7 +42,7 @@
                   class="form-control"
                   [(ngModel)]="quantities[pizza.id]"
                   [disabled]="!pizza.available"
-                >
+                />
 
                 <button
                   class="btn btn-outline-secondary"
@@ -91,17 +79,12 @@
             </div>
 
             <!-- Unavailable badge -->
-            <span 
-              *ngIf="!pizza.available"
-              class="badge bg-secondary mt-2 text-center w-100"
-            >
+            <span *ngIf="!pizza.available" class="badge bg-secondary mt-2 text-center w-100">
               Unavailable
             </span>
-
           </div>
         </div>
       </div>
     }
-
   </div>
 </div>

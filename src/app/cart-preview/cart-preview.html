@@ -1,6 +1,5 @@
 <div class="card sticky-top cart-preview">
   <div class="card-body">
-
     <h5 class="card-title">🛒 Cart</h5>
 
     @if ((cartItems$ | async)?.length === 0) {
@@ -12,21 +11,18 @@
         @for (item of cartItems$ | async; track item.pizzaId) {
           <li class="list-group-item d-flex justify-content-between">
             <span>{{ item.name }} × {{ item.quantity }}</span>
-            <span>€ {{ item.price * item.quantity | number:'1.2-2' }}</span>
-                        <span>quantity: {{item.size}}</span>
-
+            <span>€ {{ item.price * item.quantity | number: '1.2-2' }}</span>
+            <span>quantity: {{ item.size }}</span>
           </li>
         }
       </ul>
 
       <div class="d-flex justify-content-between fw-bold">
         <span>Total</span>
-        <span>€ {{ getTotal() | number:'1.2-2' }}</span>
+        <span>€ {{ getTotal() | number: '1.2-2' }}</span>
       </div>
 
-      <a routerLink="/cart" class="btn btn-primary w-100 mt-3">
-        View Cart
-      </a>
+      <a routerLink="/cart" class="btn btn-primary w-100 mt-3"> View Cart </a>
     }
   </div>
 </div>

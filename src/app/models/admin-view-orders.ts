@@ -4,7 +4,7 @@ export interface AdminViewOrders {
   status: string;
   createdAt: string;
   pickupTime: string;
-  email:string;
+  email: string;
   orderItems: {
     pizzaName: string;
     size: string;

@@ -8,11 +8,11 @@ export const customerGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   return auth.role$.pipe(
-    map(role => {
+    map((role) => {
       if (!role) {
         // Not logged in
         return router.createUrlTree(['/login'], {
-          queryParams: { returnUrl: state.url }
+          queryParams: { returnUrl: state.url },
         });
       }
 
@@ -22,6 +22,6 @@ export const customerGuard: CanActivateFn = (route, state) => {
 
       // Logged in, but wrong role
       return router.createUrlTree(['/access-denied']);
-    })
+    }),
   );
 };

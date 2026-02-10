@@ -7,23 +7,25 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
-
   errorMessages: string[] = [];
   isRegisterMode = false;
-  name='';
-  phoneNumber='';
+  name = '';
+  phoneNumber = '';
   email = '';
   password = '';
   error = '';
   loading = false;
-  constructor( private route: ActivatedRoute,private authService:Auth,private router: Router,private cdr: ChangeDetectorRef){
-
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private authService: Auth,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   login() {
     this.error = '';
@@ -37,92 +39,82 @@ export class Login {
       error: () => {
         this.error = 'Invalid email or password';
         this.loading = false;
-      }
+      },
     });
   }
 
   submit() {
-  this.error = '';
-  this.loading = true;
+    this.error = '';
+    this.loading = true;
 
-  if (this.isRegisterMode) {
-    this.authService.register(this.name, this.email, this.password, this.phoneNumber)
-      .subscribe({
+    if (this.isRegisterMode) {
+      this.authService.register(this.name, this.email, this.password, this.phoneNumber).subscribe({
         next: () => {
           this.loading = false;
-        this.navigateAfterLogin();
+          this.navigateAfterLogin();
         },
-        error: err => {
-    this.errorMessages = []; 
+        error: (err) => {
+          this.errorMessages = [];
 
-    if (err.status === 400) {
+          if (err.status === 400) {
+            if (Array.isArray(err.error)) {
+              this.errorMessages.push(...err.error);
+            } else {
+              this.errorMessages.push(err.error);
+            }
 
-      
-      if (Array.isArray(err.error)) {
-        this.errorMessages.push(...err.error); 
-      } else {
-        this.errorMessages.push(err.error); 
-      }
-
-      this.cdr.markForCheck();
+            this.cdr.markForCheck();
+          } else {
+            this.errorMessages.push('Something went wrong. Please try again.');
+          }
+        },
+      });
     } else {
-      this.errorMessages.push('Something went wrong. Please try again.');
-    }
-  }
-      });
-  } else {
-    
-    this.authService.login(this.email, this.password)
-      .subscribe({
+      this.authService.login(this.email, this.password).subscribe({
         next: () => {
           this.loading = false;
-        this.navigateAfterLogin();
+          this.navigateAfterLogin();
         },
-        error: err => {
-    this.errorMessages = []; 
+        error: (err) => {
+          this.errorMessages = [];
 
-    if (err.status === 400) {
+          if (err.status === 400) {
+            if (Array.isArray(err.error)) {
+              this.errorMessages.push(...err.error);
+            } else {
+              this.errorMessages.push(err.error);
+            }
 
-      
-      if (Array.isArray(err.error)) {
-        this.errorMessages.push(...err.error); 
-      } else {
-        this.errorMessages.push(err.error);
-      }
+            this.cdr.markForCheck();
+          } else if (err.status === 500) {
+            if (Array.isArray(err.error)) {
+              this.errorMessages.push(...err.error);
+            } else {
+              this.errorMessages.push(err.error);
+            }
 
-      this.cdr.markForCheck();
-    } else if (err.status===500){
-        if (Array.isArray(err.error)) {
-        this.errorMessages.push(...err.error);
-      } else {
-        this.errorMessages.push(err.error);
-      }
-
-      this.cdr.markForCheck();
-
+            this.cdr.markForCheck();
+          }
+        },
+      });
     }
   }
-      });
-  }
-}
 
   toggleMode() {
-  this.isRegisterMode = !this.isRegisterMode;
+    this.isRegisterMode = !this.isRegisterMode;
 
-   this.name = '';
-  this.phoneNumber = '';
-  this.email = '';
-  this.password = '';
-  this.errorMessages = [];
-  this.error = '';
-  this.loading = false;
-}
+    this.name = '';
+    this.phoneNumber = '';
+    this.email = '';
+    this.password = '';
+    this.errorMessages = [];
+    this.error = '';
+    this.loading = false;
+  }
 
-private navigateAfterLogin() {
-  const returnUrl =
-    this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+  private navigateAfterLogin() {
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
 
     this.router.navigateByUrl(returnUrl);
-}
-
+  }
 }

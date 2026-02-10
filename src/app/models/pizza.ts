@@ -4,7 +4,7 @@ export interface Pizza {
   description: string;
   price: number;
   available: boolean;
-  size:string,
+  size: string;
   imageUrl: string;
   toppings: string[];
 }

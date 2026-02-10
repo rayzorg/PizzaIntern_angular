@@ -5,14 +5,11 @@ import { Pizza } from '../models/pizza';
 import { HttpClient } from '@angular/common/http';
 import { OrderResponse } from '../models/order-response';
 
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
-
- private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
+  private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
 
   get items(): CartItem[] {
@@ -32,19 +29,21 @@ export class CartService {
     const normalizedSize = size ?? 'M';
     const items = [...this.getItems()];
 
-    const existing = items.find(item => item.pizzaId === pizza.id && item.size === normalizedSize);
+    const existing = items.find(
+      (item) => item.pizzaId === pizza.id && item.size === normalizedSize,
+    );
 
     if (existing) {
-      existing.quantity+=quantity;
+      existing.quantity += quantity;
     } else {
       items.push({
         pizzaId: pizza.id,
         name: pizza.name,
         price: pizza.price,
         quantity,
-        size:normalizedSize,
-        imageUrl:pizza.imageUrl,
-        toppings: pizza.toppings
+        size: normalizedSize,
+        imageUrl: pizza.imageUrl,
+        toppings: pizza.toppings,
       });
     }
 
@@ -52,60 +51,51 @@ export class CartService {
   }
 
   removePizza(pizzaId: number): void {
-    const items = this.getItems().filter(i => i.pizzaId !== pizzaId);
+    const items = this.getItems().filter((i) => i.pizzaId !== pizzaId);
     this.cartItemsSubject.next(items);
   }
 
- removeItem(pizzaId: number, size: string) {
-  const filtered = this.items.filter(
-    item => !(item.pizzaId === pizzaId && item.size === size)
-  );
+  removeItem(pizzaId: number, size: string) {
+    const filtered = this.items.filter((item) => !(item.pizzaId === pizzaId && item.size === size));
 
-  this.emit(filtered);
-}
+    this.emit(filtered);
+  }
 
   clear(): void {
     this.cartItemsSubject.next([]);
   }
 
-decrementPizza(pizzaId: number, size: string): void {
-  const items = [...this.getItems()];
+  decrementPizza(pizzaId: number, size: string): void {
+    const items = [...this.getItems()];
 
-  const item = items.find(i => i.pizzaId === pizzaId && i.size === size);
-  if (!item) return;
+    const item = items.find((i) => i.pizzaId === pizzaId && i.size === size);
+    if (!item) return;
 
-  item.quantity -= 1;
+    item.quantity -= 1;
 
-  // If quantity is 0, remove the row
-  const newItems = item.quantity > 0
-    ? items
-    : items.filter(i => !(i.pizzaId === pizzaId && i.size === size));
+    // If quantity is 0, remove the row
+    const newItems =
+      item.quantity > 0 ? items : items.filter((i) => !(i.pizzaId === pizzaId && i.size === size));
 
-  this.cartItemsSubject.next(newItems);
-}
-
-  getTotal(): number {
-    return this.getItems()
-      .reduce((sum, item) => sum + item.price * item.quantity, 0);
+    this.cartItemsSubject.next(newItems);
   }
 
-  placeOrder(pickupTime: string,email:string) {
-  const payload = {
-    pickupTime,
-    email,
-  items: this.getItems().map(item => ({
-    pizzaId: item.pizzaId,
-    size: item.size,
-    quantity: item.quantity,
-    
-  }))
-};
-  console.log('ORDER PAYLOAD', payload);
+  getTotal(): number {
+    return this.getItems().reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }
 
-  return this.http.post<OrderResponse>(
-    'http://localhost:8080/api/orders',
-    payload
-  );
-}
+  placeOrder(pickupTime: string, email: string) {
+    const payload = {
+      pickupTime,
+      email,
+      items: this.getItems().map((item) => ({
+        pizzaId: item.pizzaId,
+        size: item.size,
+        quantity: item.quantity,
+      })),
+    };
+    console.log('ORDER PAYLOAD', payload);
 
+    return this.http.post<OrderResponse>('http://localhost:8080/api/orders', payload);
+  }
 }

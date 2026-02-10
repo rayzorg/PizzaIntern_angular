@@ -12,31 +12,34 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './navbar.html',
-  styleUrls: ['./navbar.css']
+  styleUrls: ['./navbar.css'],
 })
 export class Navbar {
   username: string | null = null;
-    role: string | null = null;
+  role: string | null = null;
 
-  cartCount$ : Observable<number>;
-  dropdownOpen=false;
+  cartCount$: Observable<number>;
+  dropdownOpen = false;
 
-  constructor(public auth: Auth,private cartService: CartService,private router: Router) {
-    
-     this.auth.username$.subscribe((name) => {
+  constructor(
+    public auth: Auth,
+    private cartService: CartService,
+    private router: Router,
+  ) {
+    this.auth.username$.subscribe((name) => {
       this.username = name;
-      console.log('username' + this.username)
+      console.log('username' + this.username);
     });
 
-    this.auth.role$.subscribe(role => this.role = role);
-  this.cartCount$ = this.cartService.cartItems$.pipe(
-  map(items => items.reduce((sum, i) => sum + i.quantity, 0))
-);
+    this.auth.role$.subscribe((role) => (this.role = role));
+    this.cartCount$ = this.cartService.cartItems$.pipe(
+      map((items) => items.reduce((sum, i) => sum + i.quantity, 0)),
+    );
   }
 
-   logout() {
+  logout() {
     this.auth.logout();
-    
+
     this.router.navigate(['/']);
   }
 
