@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class Login {
   errorMessages: string[] = [];
+  fieldErrors: { [key: string]: string } = {};
   isRegisterMode = false;
   name = '';
   phoneNumber = '';
@@ -46,6 +47,8 @@ export class Login {
   submit() {
     this.error = '';
     this.loading = true;
+    this.fieldErrors = {};
+
 
     if (this.isRegisterMode) {
       this.authService.register(this.name, this.email, this.password, this.phoneNumber).subscribe({

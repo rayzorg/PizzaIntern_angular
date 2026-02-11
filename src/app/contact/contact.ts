@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MapLocation } from '../map-location/map-location';
 import { ContactForm } from '../models/contact-form';
 import { ContactService } from '../services/contactService';
-import { NgModel } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
@@ -35,7 +34,6 @@ export class Contact {
   ) {}
 
   submit() {
-    // reset previous messages
     this.errorMessages = [];
     this.fieldErrors = {};
     this.successMessage = '';

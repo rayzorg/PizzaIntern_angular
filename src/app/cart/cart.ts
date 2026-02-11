@@ -20,7 +20,7 @@ export class Cart {
   order: any;
   pickupTime: string;
   email: string = '';
-
+  fieldErrors: { [key: string]: string } = {};
   errorMessages: string[] = [];
   isSubmitting = false;
 
@@ -84,33 +84,34 @@ export class Cart {
   }
 
   placeOrder() {
-    this.cartService.placeOrder(this.pickupTime, this.email).subscribe({
-      next: (response) => {
-        this.errorMessages = [];
-        console.log('Full response from backend:', response);
+  this.errorMessages = [];
+  this.fieldErrors = {};
 
-        //alert(`Order placed! Order ID: ${response.orderId}. Pickup at ${new Date(response.pickupTime!).toLocaleString()}`);
-        console.log('ijijijijjiijijiiiiiii' + response.publicId);
-        this.cartService.clear();
-        this.router.navigate(['/order-confirmation', response.publicId]);
-      },
-      error: (err) => {
-        this.errorMessages = [];
-
-        if (err.status === 400) {
-          console.log('ERROR RECEIVED:', err.error);
-
-          if (Array.isArray(err.error)) {
-            this.errorMessages.push(...err.error);
+  this.cartService.placeOrder(this.pickupTime, this.email).subscribe({
+    next: (response) => {
+      this.cartService.clear();
+      this.router.navigate(['/order-confirmation', response.publicId]);
+    },
+    error: (err) => {
+      if (err.status === 400 && Array.isArray(err.error)) {
+        err.error.forEach((msg: string) => {
+           this.errorMessages.push(msg);
+          const parts = msg.split(':');
+          if (parts.length === 2) {
+            const field = parts[0].trim();
+            const message = parts[1].trim();
+            this.fieldErrors[field] = message;
           } else {
-            this.errorMessages.push(err.error);
+            this.errorMessages.push(msg);
           }
+        });
+      } else {
+        this.errorMessages = ['Something went wrong. Please try again.'];
+      }
 
-          this.cdr.markForCheck();
-        } else {
-          this.errorMessages.push('Something went wrong. Please try again.');
-        }
-      },
-    });
-  }
+      this.cdr.markForCheck();
+    },
+  });
+}
+
 }
