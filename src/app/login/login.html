@@ -19,6 +19,9 @@
           name="name"
           required
         />
+        <div class="text-danger" *ngIf="fieldErrors['name']">
+          {{ fieldErrors['name'] }}
+        </div>
       </div>
 
       <input
@@ -29,6 +32,9 @@
         name="email"
         required
       />
+      <div class="text-danger" *ngIf="fieldErrors['email']">
+        {{ fieldErrors['email'] }}
+      </div>
       <input
         type="password"
         class="form-control mb-2"
@@ -37,7 +43,9 @@
         name="password"
         required
       />
-
+      <div class="text-danger" *ngIf="fieldErrors['password']">
+        {{ fieldErrors['password'] }}
+      </div>
       <div *ngIf="isRegisterMode" class="mb-2">
         <input
           type="text"
@@ -46,6 +54,9 @@
           [(ngModel)]="phoneNumber"
           name="phoneNumber"
         />
+        <div class="text-danger" *ngIf="fieldErrors['phoneNumber']">
+          {{ fieldErrors['phoneNumber'] }}
+        </div>
       </div>
 
       <button class="btn btn-primary w-100">{{ isRegisterMode ? 'Register' : 'Login' }}</button>
