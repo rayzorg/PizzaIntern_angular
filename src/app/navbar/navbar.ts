@@ -28,7 +28,6 @@ export class Navbar {
   ) {
     this.auth.username$.subscribe((name) => {
       this.username = name;
-      console.log('username' + this.username);
     });
 
     this.auth.role$.subscribe((role) => (this.role = role));

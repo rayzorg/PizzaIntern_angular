@@ -20,7 +20,6 @@ export class Myorders implements OnInit {
 
   ngOnInit(): void {
     this.order$ = this.orderService.getUserOrders();
-    this.order$.subscribe((o) => console.log(o));
   }
 
   toggle(publicId: string) {

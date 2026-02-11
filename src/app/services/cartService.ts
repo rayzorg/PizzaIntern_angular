@@ -94,8 +94,6 @@ export class CartService {
         quantity: item.quantity,
       })),
     };
-    console.log('ORDER PAYLOAD', payload);
-
     return this.http.post<OrderResponse>('http://localhost:8080/api/orders', payload);
   }
 }

@@ -23,11 +23,9 @@ export class OrderConfirmation implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('publicId')!;
-    console.log('ORDER ID FROM ROUTE:', id);
 
     this.order$ = this.orderService.getOrderById(id);
     this.order$.subscribe((order) => {
-      console.log('ORDER RECEIVED:', order);
     });
   }
 }

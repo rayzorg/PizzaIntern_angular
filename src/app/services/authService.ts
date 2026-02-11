@@ -29,7 +29,6 @@ export class Auth {
         tap((res) => {
           localStorage.setItem(this.tokenKey, res.token);
           this.setUserFromToken(res.token);
-          console.log(res.token);
         }),
       );
   }
@@ -45,7 +44,6 @@ export class Auth {
       .pipe(
         tap((res) => {
           localStorage.setItem(this.tokenKey, res.token);
-          console.log(res.token);
           this.setUserFromToken(res.token);
         }),
       );
