@@ -20,7 +20,7 @@ export const routes: Routes = [
 
   { path: 'order-confirmation/:publicId', component: OrderConfirmation },
   { path: '', component: Menu },
-  { path: 'cart', component: Cart },
+  { path: 'cart', component: Cart,canActivate: [customerGuard] },
 
   {
     path: 'admin',
